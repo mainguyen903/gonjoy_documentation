@@ -24,7 +24,7 @@ library(tidyr)
 ## Data table
 
 ```{r list of table, echo=F}
-path = "/Users/user/Documents/Job/GONJOY/DB/Raw/"
+path = paste(getwd(),"Raw/",sep="")
 
 # Import data
 list_tables = list.files(path=path)
