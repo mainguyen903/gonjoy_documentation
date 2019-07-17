@@ -1,0 +1,121 @@
+---
+title: "Database Documentation"
+author: "Mai Nguyen"
+date: "16 Jul 2019"
+output:
+  html_document:
+    highlight: tango
+    number_sections: no
+    theme: cerulean
+    toc: yes
+    toc_float: yes
+  pdf_document:
+    toc: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(pander)
+library(tidyr)
+```
+
+## Data table
+
+```{r list of table, echo=F}
+path = "/Users/user/Documents/Job/GONJOY/DB/Raw/"
+
+# Import data
+list_tables = list.files(path=path)
+```
+
+At this time, there are `r length(list_tables)` tables, include:
+```{r table name, echo=F}
+table_name = gsub("gonjoy34.","",list_tables)
+table_name = gsub(".csv","",table_name)
+table_name
+```
+
+```{r function to create description for data table, echo = F}
+desc_fun = function(nameoftable){
+  data_field = names(nameoftable)
+  description = rep("",length(data_field))
+  table_description=data.frame(cbind(data_field,description))
+}
+```
+
+### 1. Clients {.tabset}
+#### 1.1 User
+This table provides information about ...
+
+```{r user table, echo = F}
+user = read.csv(paste(path,list_tables[1],sep=""),header=T)
+```
+
+```{r write description for user table, echo=F}
+user_desc=desc_fun(user)
+user_desc$description=c(rep("",dim(user)[2]))
+user_desc$description[2]="This is customerID"
+pander(head(user_desc))
+```
+
+#### 1.2 Provider
+```{r provider table, echo = F}
+provider = read.csv(paste(path,list_tables[13],sep=""),header=T)
+```
+
+```{r write description for provider table, echo=F}
+provider_desc=desc_fun(provider)
+provider_desc$description=c(rep("",dim(provider)[2]))
+provider_desc$description[3]="This is customerID"
+pander(head(provider_desc))
+```
+
+#### 1.3 Visitors
+```{r visitor table, echo = F}
+visitors = read.csv(paste(path,list_tables[17],sep=""),header=T)
+```
+
+```{r write description for visitor table, echo=F}
+visitors_desc=desc_fun(visitors)
+visitors_desc$description=c(rep("",dim(visitors)[2]))
+visitors_desc$description[1]="This is customerID"
+pander(head(visitors_desc))
+```
+### 2. History {.tabset}
+#### 2.1 History location
+
+#### 2.2 History Search
+
+#### 2.3 History NLP
+```{r history NLP table, echo = F}
+histNLP = read.csv(paste(path,list_tables[3],sep=""),header=T)
+```
+
+Data fields of table History NLP are:
+```{r write description for history NLP table, echo=F}
+histNLP_desc=desc_fun(histNLP)
+histNLP_desc$description=c(rep("",dim(histNLP)[2]))
+histNLP_desc$description[1]="This is customerID"
+names(histNLP)
+```
+
+## Data connection
+This section describes how data tables are connected.
+
+## Data processing
+* describes how to extract information from other tables to obtain dataset for analysis.
+* how to clean data
+* how to transform data
+```{r user table processing, echo=F}
+user1=separate(customer,savedAddress,sep=",",into = c("id","channelID","botID","botdesc","conversation","userid","username","url"),remove = F)
+user$createdAt=format(user$createdAt,"mm")
+```
+
+## Data visualization
+```{r visualization customer table, echo=F}
+
+```
+
+
